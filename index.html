@@ -4,10 +4,20 @@ fetch('index-2.html').then(r=>r.text()).then(t=>{
   t=t.split('2026-11-19-141426903.mp4').join('1118%282%29.mp4');
   var d=new DOMParser().parseFromString(t,'text/html');
   var v=d.getElementById('video'),c=d.getElementById('cards');
-  var fs=[].slice.call(v.querySelectorAll('figure.vf'));
-  var box=fs[0].parentNode;
-  box.insertBefore(fs[fs.length-2],box.firstChild);
-  box.insertBefore(fs[fs.length-1],box.firstChild);
+  var box=v.querySelector('.vids');
+  function f(s){var x=box.querySelector('video[src^="'+s+'"]');return x?x.parentNode:null}
+  ['yacht.mp4','kazan.mp4','142087947_1794338521306917.mp4'].forEach(function(s){var e=f(s);if(e)e.remove()});
+  var order=[
+    ['1118%282%29.mp4'],
+    ['%D0%BC%D1%83%D0%BB%D1%8C%D1%82%D1%82%D0%B0%D0%BD%D0%B5%D1%86.mp4'],
+    ['2026-11-18-005017122.mp4','Холодная роскошь'],
+    ['2026-11-18-121630563.mp4','Только одно правило: ты либо охотник, либо добыча']
+  ];
+  for(var i=order.length-1;i>=0;i--){
+    var e=f(order[i][0]);if(!e)continue;
+    if(order[i][1]){e.querySelector('figcaption').textContent=order[i][1];e.querySelector('video').setAttribute('aria-label',order[i][1]);}
+    box.insertBefore(e,box.firstChild);
+  }
   c.parentNode.insertBefore(v,c);
   document.open();
   document.write('<!doctype html>'+d.documentElement.outerHTML);
