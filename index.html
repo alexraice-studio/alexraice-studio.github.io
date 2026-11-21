@@ -2,6 +2,15 @@
 <script>
 fetch('index-2.html').then(r=>r.text()).then(t=>{
   t=t.split('2026-11-19-141426903.mp4').join('1118%282%29.mp4');
-  document.open();document.write(t);document.close();
+  var d=new DOMParser().parseFromString(t,'text/html');
+  var v=d.getElementById('video'),c=d.getElementById('cards');
+  var fs=[].slice.call(v.querySelectorAll('figure.vf'));
+  var box=fs[0].parentNode;
+  box.insertBefore(fs[fs.length-2],box.firstChild);
+  box.insertBefore(fs[fs.length-1],box.firstChild);
+  c.parentNode.insertBefore(v,c);
+  document.open();
+  document.write('<!doctype html>'+d.documentElement.outerHTML);
+  document.close();
 }).catch(()=>{location.replace('index-2.html')});
 </script>
