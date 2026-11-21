@@ -1,2 +1,7 @@
-<meta http-equiv="refresh" content="0; url=index-2.html">
-<a href="index-2.html">Перейти на сайт</a>
+<!doctype html>
+<script>
+fetch('index-2.html').then(r=>r.text()).then(t=>{
+  t=t.split('2026-11-19-141426903.mp4').join('1118%282%29.mp4');
+  document.open();document.write(t);document.close();
+}).catch(()=>{location.replace('index-2.html')});
+</script>
